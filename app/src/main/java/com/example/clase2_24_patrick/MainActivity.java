@@ -16,23 +16,35 @@ import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.regex.Pattern;
 
 public class MainActivity extends AppCompatActivity {
     EditText txt_dni;
     Button btn_buscar;
-    TextView txt_mostrar;
+    TextView txt_mostrar1;
+    TextView txt_mostrar2;
+    TextView txt_mostrar3;
     String resultado;
+    String[] nombres;
+    String funcion;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         txt_dni = findViewById(R.id.txt_dni);
         btn_buscar = findViewById(R.id.btn_buscar);
-        txt_mostrar = findViewById(R.id.txt_mostrar);
+        txt_mostrar1 = findViewById(R.id.txt_mostrar1);
+        txt_mostrar2 = findViewById(R.id.txt_mostrar2);
+        txt_mostrar3 = findViewById(R.id.txt_mostrar3);
         btn_buscar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                txt_mostrar.setText(ExtraerDNI(txt_dni.getText().toString()));
+                funcion =  ExtraerDNI(txt_dni.getText().toString());
+                nombres =funcion.split(Pattern.quote("|"));
+
+                txt_mostrar1.setText("Nombre : " + " " + nombres[2].trim());
+                txt_mostrar2.setText("Apellido Paterno : " + " " + nombres[0].trim());
+                txt_mostrar3.setText("Apellido Materno : " + " " + nombres[1].trim());
             }
         });
     }
